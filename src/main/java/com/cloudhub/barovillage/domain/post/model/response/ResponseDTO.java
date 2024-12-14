@@ -4,6 +4,8 @@ import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
 
+import com.cloudhub.barovillage.domain.comment.Comment;
+import com.cloudhub.barovillage.domain.comment.model.dto.CommentDTO;
 import com.cloudhub.barovillage.domain.post.Post;
 import com.cloudhub.barovillage.domain.post.model.dto.PostDTO;
 
@@ -15,8 +17,6 @@ import lombok.RequiredArgsConstructor;
 import lombok.Setter;
 
 public class ResponseDTO{
-
-    
     @RequiredArgsConstructor
     @Getter
     @Setter
@@ -49,10 +49,11 @@ public class ResponseDTO{
         private final Long userId;
         private final String username;
         private final String profileImageUrl;
+        private List<CommentDTO> commentList;
 
         @Builder
         public GetPostDetailResDTO(String postId, String title, String postType, String content, String imageUrl,
-                LocalDateTime createAt, String status, Long userId, String username, String profileImageUrl) {
+                LocalDateTime createAt, String status, Long userId, String username, String profileImageUrl, List<CommentDTO> commentList) {
             this.postId = postId;
             this.title = title;
             this.postType = postType;
@@ -63,9 +64,10 @@ public class ResponseDTO{
             this.userId = userId;
             this.username = username;
             this.profileImageUrl = profileImageUrl;
+            this.commentList = commentList;
         }
 
-        public GetPostDetailResDTO(Post post){
+        public GetPostDetailResDTO(Post post, List<Comment> commentList){
             this.postId = String.valueOf(post.getId());
             this.title = post.getTitle();
             this.postType = post.getPostType();
@@ -77,6 +79,12 @@ public class ResponseDTO{
             this.userId = user.getId();
             this.username = user.getNickname();
             this.profileImageUrl = user.getProfileImageUrl();
+
+            List<CommentDTO> results = new ArrayList<>();
+            commentList.forEach((c)->{
+                results.add(CommentDTO.fromComment(c));
+            });
+            this.commentList = results;
         }
     }
 }

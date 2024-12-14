@@ -45,4 +45,14 @@ public class Post {
     @ManyToOne
     @JoinColumn
     private  User user;
+
+    @Builder
+    public Post(Long id, String title,String content,String imageUrl,String postType,String status){
+        this.id = id;
+        this.title = title;
+        this.content = content;
+        this.imageUrl= imageUrl;
+        this.postType = postType;
+        this.status = status;
+    }
 }

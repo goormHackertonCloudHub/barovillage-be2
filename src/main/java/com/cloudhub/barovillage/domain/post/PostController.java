@@ -1,6 +1,10 @@
 package com.cloudhub.barovillage.domain.post;
 
+import com.cloudhub.barovillage.domain.post.model.request.AddPostRequestDTO;
+import com.cloudhub.barovillage.domain.post.model.response.AddResponseDTO;
 import com.cloudhub.barovillage.domain.post.model.response.ResponseDTO;
+import org.springframework.http.ResponseEntity;
+import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
 
 import com.cloudhub.barovillage.domain.post.model.request.RequestDTO;
@@ -39,12 +43,16 @@ public class PostController{
         return responseDTO;
     }
     
-    
-    @PostMapping("/add/post")
-    public String addPost(@RequestBody String entity) {
+
+    @ResponseBody
+    @PostMapping("/posts/add")
+    public ResponseEntity<Post> addPost(@RequestBody AddPostRequestDTO requestDTO, @RequestHeader("Authorization") HttpHeaders headers, BindingResult bindingResult) {
         //TODO: process POST request
+        System.out.println("=================================");
+        System.out.println(requestDTO.getTitle());
         
-        return entity;
+        Post postPS = postService.addPost(requestDTO);
+        return ResponseEntity.ok(postPS);
     }
 
 

@@ -12,5 +12,5 @@ import lombok.NoArgsConstructor;
 public class PostUserLocationRes {
     private Long userId;
     private String regionName;
-    private Integer regionCode;
+    private Long regionCode;
 }
