@@ -56,9 +56,9 @@ public class UserController {
         Double latitude = postUserLocationReq.getLatitude();
         Double longitude = postUserLocationReq.getLongitude();
 
-        userService.authUserLocation(loginUserId, latitude, longitude);
+        PostUserLocationRes postUserLocationRes = userService.authUserLocation(loginUserId, latitude, longitude);
 
-        return null;
+        return ResponseEntity.ok(postUserLocationRes);
 
     }
 
