@@ -9,6 +9,7 @@ import com.cloudhub.barovillage.domain.post.model.response.ResponseDTO.GetPostsR
 
 import lombok.RequiredArgsConstructor;
 
+import java.net.http.HttpHeaders;
 import java.util.Map;
 
 import org.springframework.messaging.handler.annotation.Header;
@@ -28,10 +29,12 @@ public class PostController{
     private final String Authorization = "Authorization";
 
     @GetMapping("/posts")
-    public GetPostsResDTO getPosts(@RequestParam RequestDTO.GetPostsReqDTO params, @RequestHeader Map<String,String> header) {
-        System.out.println(params.toString());
-        final String userId = header.get(Authorization);
-        GetPostsResDTO responseDTO = postService.getPosts(params, userId);
+    @ResponseBody
+    public GetPostsResDTO getPosts(@RequestParam(name = "transaction_type") String tT, @RequestHeader("Authorization") String userId) {
+        System.out.println(tT);
+        System.out.println(userId);
+        GetPostsResDTO responseDTO = postService.getPosts(tT, userId);
+        System.out.println(responseDTO.toString());
         return responseDTO;
     }
     

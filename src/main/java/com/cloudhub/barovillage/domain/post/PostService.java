@@ -11,8 +11,10 @@ import lombok.RequiredArgsConstructor;
 public class PostService {
         private final PostRepository postRepository;
     
-        public GetPostsResDTO getPosts(GetPostsReqDTO requestDTO, String userId){
-            List<Post> posts = postRepository.findByTransactionTypeList(requestDTO.getTransaction_type(), userId);
+        public GetPostsResDTO getPosts(String transaction_type, String userId){
+            
+            List<Post> posts = postRepository.findByTransactionTypeList(transaction_type, Integer.parseInt(userId));
+            posts.forEach((p)->{System.out.println(p.toString());});
             GetPostsResDTO responseDTO = GetPostsResDTO.fromPostList(posts);
             return responseDTO;
         }
