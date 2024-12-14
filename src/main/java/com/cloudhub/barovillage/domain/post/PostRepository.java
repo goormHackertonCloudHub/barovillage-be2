@@ -15,5 +15,8 @@ public interface PostRepository extends JpaRepository<Post, Long>{
     // @Query("SELECT p FROM Post p JOIN User u ON p.user.id = uid WHERE p.transaction_type = t AND p.si = u.si AND p.gu = u.gu AND p.dong = u.dong")
     // @Query("SELECT p FROM Post p")
     @Query("SELECT p FROM Post p JOIN p.user u ON u.id = :uid")
-    List<Post> findByTransactionTypeList(@Param("t") String t, @Param("uid") Integer uid);
+    List<Post> findByPostTypeList(@Param("t") String t, @Param("uid") Integer uid);
+
+    @Query("SELECT p FROM Post p WHERE p.id = :id")
+    Post findAllByPostId(@Param("id") Long postId);
 } 

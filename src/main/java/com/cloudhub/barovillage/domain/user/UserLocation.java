@@ -49,6 +49,7 @@ public class UserLocation {
     @CreatedDate
     private LocalDateTime createdAt;
 
+    @Enumerated(EnumType.STRING)
     @Column(nullable = false)
     private UserLocationStatus status;
 
