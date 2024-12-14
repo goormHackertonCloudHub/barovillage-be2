@@ -4,12 +4,14 @@ import jakarta.persistence.*;
 import lombok.Builder;
 import lombok.Getter;
 import org.springframework.data.annotation.CreatedDate;
+import org.springframework.data.jpa.domain.support.AuditingEntityListener;
 
 import java.time.LocalDateTime;
 
 @Entity
 @Table(name = "user_location_table")
 @Getter
+@EntityListeners(AuditingEntityListener.class)
 public class UserLocation {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
