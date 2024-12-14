@@ -8,5 +8,5 @@ import lombok.RequiredArgsConstructor;
 @Service
 @RequiredArgsConstructor
 public class PostService {
-    
+    private final PostRepository repository;
 }
