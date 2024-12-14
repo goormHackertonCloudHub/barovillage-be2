@@ -35,33 +35,33 @@ import lombok.ToString;
 public class Post {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Integer id;
+    private Long id;
     private String title;
     private String content;
 
     @Column()
     private String imageUrl;
-    private String transactionType;
+    private String postType;
 
     @CreatedDate
     private LocalDateTime createAt;
     private String status;
 
-    // private String si;
-    // private String gu;
-    // private String dong;
+    private String si;
+    private String gu;
+    private String dong;
 
     @ManyToOne
     @JoinColumn
     private User user;
 
     @Builder
-    public Post(Integer id, String title, String content, String imageUrl, String transactionType, LocalDateTime createAt, String status){
+    public Post(Long id, String title, String content, String imageUrl, String postType, LocalDateTime createAt, String status){
         this.id = id;
         this.title=title;
         this.content = content;
         this.imageUrl= imageUrl;
-        this.transactionType=transactionType;
+        this.postType=postType;
         this.createAt=createAt;
         this.status=status;
     }

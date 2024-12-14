@@ -1,8 +1,7 @@
 package com.cloudhub.barovillage.domain.post;
 
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.ResponseBody;
-import org.springframework.web.bind.annotation.RestController;
+import com.cloudhub.barovillage.domain.post.model.response.ResponseDTO;
+import org.springframework.web.bind.annotation.*;
 
 import com.cloudhub.barovillage.domain.post.model.request.RequestDTO;
 import com.cloudhub.barovillage.domain.post.model.response.ResponseDTO.GetPostsResDTO;
@@ -13,30 +12,40 @@ import java.net.http.HttpHeaders;
 import java.util.Map;
 
 import org.springframework.messaging.handler.annotation.Header;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestHeader;
-import org.springframework.web.bind.annotation.RequestParam;
-
 
 
 @RestController
 @RequestMapping("/api")
+@CrossOrigin(origins = "*")
 @RequiredArgsConstructor
 public class PostController{
     private final PostService postService;
-    private final String Authorization = "Authorization";
+
 
     @GetMapping("/posts")
     @ResponseBody
-    public GetPostsResDTO getPosts(@RequestParam(name = "transaction_type") String tT, @RequestHeader("Authorization") String userId) {
+    public GetPostsResDTO getPosts(@RequestParam(name = "post_type") String tT, @RequestHeader("Authorization") String userId) {
         System.out.println(tT);
         System.out.println(userId);
         GetPostsResDTO responseDTO = postService.getPosts(tT, userId);
         System.out.println(responseDTO.toString());
         return responseDTO;
     }
+
+    @GetMapping("/posts/{post_id}")
+    public ResponseDTO.GetPostDetailResDTO getMethodName(@PathVariable("post_id") Long postId) {
+        ResponseDTO.GetPostDetailResDTO responseDTO =  postService.getPostDetailResDTO(postId);
+        return responseDTO;
+    }
     
+    
+    @PostMapping("/add/post")
+    public String addPost(@RequestBody String entity) {
+        //TODO: process POST request
+        
+        return entity;
+    }
+
+
     
 }
