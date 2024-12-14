@@ -30,17 +30,12 @@ public class User {
     @CreatedDate
     private LocalDateTime createdAt;
 
-    @OneToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "user_location_id")
-    private UserLocation userLocation;
-
     @Builder
     public User(Long id, String nickname, String profileImageUrl, LocalDateTime createdAt, UserLocation userLocation) {
         this.id = id;
         this.nickname = nickname;
         this.profileImageUrl = profileImageUrl;
         this.createdAt = createdAt;
-        this.userLocation = userLocation;
     }
 
     public User setNickname(String nickname) {
