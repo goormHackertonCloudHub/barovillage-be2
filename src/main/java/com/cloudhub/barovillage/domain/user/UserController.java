@@ -1,4 +1,4 @@
-package com.cloudhub.domain.user;
+package com.cloudhub.barovillage.domain.user;
 
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
