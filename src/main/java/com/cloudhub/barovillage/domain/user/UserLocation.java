@@ -3,6 +3,7 @@ package com.cloudhub.barovillage.domain.user;
 import jakarta.persistence.*;
 import lombok.Builder;
 import lombok.Getter;
+import lombok.NoArgsConstructor;
 import org.springframework.data.annotation.CreatedDate;
 import org.springframework.data.jpa.domain.support.AuditingEntityListener;
 
@@ -14,13 +15,14 @@ import static com.cloudhub.barovillage.domain.user.UserLocation.UserLocationStat
 @Table(name = "user_location_table")
 @Getter
 @EntityListeners(AuditingEntityListener.class)
+@NoArgsConstructor
 public class UserLocation {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "user_location_id", nullable = false)
     private Long id;
 
-    @OneToOne(fetch = FetchType.LAZY)
+    @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "user_id")
     private User user;
 
@@ -33,12 +35,6 @@ public class UserLocation {
     @Column(nullable = true)
     private Integer kakaoRegionCode;
 
-//    @Column(nullable = true)
-//    private String si;
-//
-//    @Column(nullable = true)
-//    private String gu;
-
     @Column(nullable = true)
     private String dong;
 
@@ -49,6 +45,7 @@ public class UserLocation {
     @CreatedDate
     private LocalDateTime createdAt;
 
+    @Enumerated(EnumType.STRING)
     @Column(nullable = false)
     private UserLocationStatus status;
 
@@ -60,10 +57,10 @@ public class UserLocation {
     // 만료기간 자동 지정
     @PrePersist
     public void setExpiredAt() {
-        if (createdAt != null) {
-            this.expiredAt = createdAt.plusMonths(1); // 한 달 뒤
+        if (this.createdAt == null) {
+            this.createdAt = LocalDateTime.now(); // createdAt이 null이면 현재 시간으로 설정
         }
-
+        this.expiredAt = createdAt.plusMonths(1); // 한 달 뒤
         this.status = ACTIVE;
     }
 
