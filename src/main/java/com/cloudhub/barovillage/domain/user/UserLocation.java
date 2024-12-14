@@ -33,7 +33,7 @@ public class UserLocation {
     private Double longitude;
 
     @Column(nullable = true)
-    private Integer kakaoRegionCode;
+    private Long kakaoRegionCode;
 
     @Column(nullable = true)
     private String dong;
@@ -65,7 +65,7 @@ public class UserLocation {
     }
 
     @Builder
-    public UserLocation(Long id, User user, Double latitude, Double longitude, Integer kakaoRegionCode, String dong, LocalDateTime expiredAt, LocalDateTime createdAt, UserLocationStatus status) {
+    public UserLocation(Long id, User user, Double latitude, Double longitude, Long kakaoRegionCode, String dong, LocalDateTime expiredAt, LocalDateTime createdAt, UserLocationStatus status) {
         this.id = id;
         this.user = user;
         this.latitude = latitude;

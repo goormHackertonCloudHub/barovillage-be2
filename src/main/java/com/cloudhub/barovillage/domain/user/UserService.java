@@ -87,7 +87,7 @@ public class UserService {
         if(userLocationDto == null)
             throw new IllegalArgumentException("행정동 조회에 실패했습니다.");
 
-        Integer regionCode = Integer.valueOf(userLocationDto.getCode());
+        Long regionCode = Long.valueOf(userLocationDto.getCode());
         String lastAddressName = userLocationDto.getLastAddressName();
 
         UserLocation userLocation = UserLocation.builder()
