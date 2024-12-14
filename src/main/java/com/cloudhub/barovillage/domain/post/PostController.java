@@ -9,5 +9,6 @@ import lombok.RequiredArgsConstructor;
 @RequestMapping("/api/post")
 @RequiredArgsConstructor
 public class PostController{
-
+    
+    private final PostService service;
 }
