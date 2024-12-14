@@ -1,4 +1,4 @@
-package com.cloudhub.domain.user;
+package com.cloudhub.barovillage.domain.user;
 
 import jakarta.persistence.*;
 import lombok.Builder;
