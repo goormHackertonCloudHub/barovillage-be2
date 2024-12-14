@@ -12,8 +12,8 @@ import org.springframework.web.bind.annotation.*;
 @RestController
 @RequiredArgsConstructor
 @Slf4j
+@CrossOrigin(origins = "*")
 public class UserController {
-
     private final UserService userService;
 
     /**
@@ -36,23 +36,31 @@ public class UserController {
     public ResponseEntity<GetCheckUserLocationAuthenticationRes> checkUserLocationAuthentication(
             @RequestHeader("Authorization") String authorization) {
         Long loginUserId = Long.valueOf(authorization);
-        Boolean result = userService.checkUserLocationStatus(loginUserId);
+        UserLocation lastUserLocation = userService.getLastUserLocation(loginUserId);
+
+        Boolean result = lastUserLocation != null ? true : false;
 
         return ResponseEntity.ok(new GetCheckUserLocationAuthenticationRes(result));
     }
 
-//    @PostMapping("/api/users/location")
-//    public ResponseEntity<PostUserLocationRes> postUserLocation (@RequestHeader("Authorization") String authorization,
-//                                                                 @RequestBody PostUserLocationReq postUserLocationReq) {
-//        Long loginUserId = Long.valueOf(authorization);
-//        Double latitude = postUserLocationReq.getLatitude();
-//        Double longitude = postUserLocationReq.getLongitude();
-//
-//        userService.authUserLocation(loginUserId, latitude, longitude);
-//
-//        return null;
-//
-//    }
+    /**
+     * 위치 인증 등록
+     * @param authorization
+     * @param postUserLocationReq
+     * @return
+     */
+    @PostMapping("/api/users/location")
+    public ResponseEntity<PostUserLocationRes> postUserLocation (@RequestHeader("Authorization") String authorization,
+                                                                 @RequestBody PostUserLocationReq postUserLocationReq) {
+        Long loginUserId = Long.valueOf(authorization);
+        Double latitude = postUserLocationReq.getLatitude();
+        Double longitude = postUserLocationReq.getLongitude();
+
+        userService.authUserLocation(loginUserId, latitude, longitude);
+
+        return null;
+
+    }
 
 
 }
