@@ -32,6 +32,7 @@ public class PostController{
         return responseDTO;
     }
 
+    @ResponseBody
     @GetMapping("/posts/{post_id}")
     public ResponseDTO.GetPostDetailResDTO getMethodName(@PathVariable("post_id") Long postId) {
         ResponseDTO.GetPostDetailResDTO responseDTO =  postService.getPostDetailResDTO(postId);
