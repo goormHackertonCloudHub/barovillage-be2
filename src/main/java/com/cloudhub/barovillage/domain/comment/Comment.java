@@ -23,7 +23,7 @@ public class Comment {
     private String content;
 
     @CreatedDate
-    private  LocalDateTime createAt;
+    private LocalDateTime createAt;
 
     @ManyToOne
     @JoinColumn
