@@ -44,15 +44,17 @@ public class Post {
 
     @ManyToOne
     @JoinColumn
-    private  User user;
+    private User user;
 
     @Builder
-    public Post(Long id, String title,String content,String imageUrl,String postType,String status){
+    public Post(Long id, String title, String content,String imageUrl, String postType,  LocalDateTime createAt, String status, User user){
         this.id = id;
         this.title = title;
         this.content = content;
         this.imageUrl= imageUrl;
         this.postType = postType;
+        this.createAt = createAt;
         this.status = status;
+        this.user = user;
     }
 }
