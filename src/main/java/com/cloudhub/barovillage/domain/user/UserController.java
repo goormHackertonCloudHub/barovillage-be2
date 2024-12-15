@@ -1,5 +1,6 @@
 package com.cloudhub.barovillage.domain.user;
 
+import com.cloudhub.barovillage.common.S3Service;
 import com.cloudhub.barovillage.domain.user.model.request.PostUserLocationReq;
 import com.cloudhub.barovillage.domain.user.model.response.GetCheckUserLocationAuthenticationRes;
 import com.cloudhub.barovillage.domain.user.model.response.PostUserLocationRes;
@@ -8,6 +9,7 @@ import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.multipart.MultipartFile;
 
 @RestController
 @RequiredArgsConstructor
@@ -15,6 +17,7 @@ import org.springframework.web.bind.annotation.*;
 @CrossOrigin(origins = "*")
 public class UserController {
     private final UserService userService;
+    private final S3Service s3Service;
 
     /**
      * 유저 등록
@@ -60,6 +63,12 @@ public class UserController {
 
         return ResponseEntity.ok(postUserLocationRes);
 
+    }
+
+    @PostMapping("/upload")
+    public ResponseEntity<String> uploadFile(@RequestParam("file") MultipartFile file) {
+        String fileUrl = s3Service.uploadImage(file);
+        return ResponseEntity.ok(fileUrl);
     }
 
 
