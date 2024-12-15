@@ -4,7 +4,6 @@ import com.cloudhub.barovillage.common.dto.KakaoAddressResponse;
 import com.cloudhub.barovillage.common.dto.KakaoAddressResponse.Document;
 import com.cloudhub.barovillage.domain.user.model.dto.UserLocationDto;
 import com.cloudhub.barovillage.domain.user.model.response.PostUserLocationRes;
-import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -167,6 +166,10 @@ public class UserService {
                 KakaoAddressResponse.class              // 응답 타입
         );
 
+    }
+
+    public Optional<User> getUser(Long userId){
+        return userRepository.findById(userId);
     }
 
 }

@@ -3,6 +3,8 @@ package com.cloudhub.barovillage.domain.post;
 import com.cloudhub.barovillage.domain.post.model.request.AddPostRequestDTO;
 import com.cloudhub.barovillage.domain.post.model.response.AddResponseDTO;
 import com.cloudhub.barovillage.domain.post.model.response.ResponseDTO;
+import com.cloudhub.barovillage.domain.user.User;
+import com.cloudhub.barovillage.domain.user.UserService;
 import org.springframework.http.ResponseEntity;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
@@ -14,6 +16,7 @@ import lombok.RequiredArgsConstructor;
 
 import java.net.http.HttpHeaders;
 import java.util.Map;
+import java.util.Optional;
 
 import org.springframework.messaging.handler.annotation.Header;
 
@@ -24,7 +27,7 @@ import org.springframework.messaging.handler.annotation.Header;
 @RequiredArgsConstructor
 public class PostController{
     private final PostService postService;
-
+    private final UserService userService;
 
     @GetMapping("/posts")
     @ResponseBody
@@ -42,19 +45,18 @@ public class PostController{
         ResponseDTO.GetPostDetailResDTO responseDTO =  postService.getPostDetailResDTO(postId);
         return responseDTO;
     }
-    
 
-    @ResponseBody
-    @PostMapping("/posts/add")
-    public ResponseEntity<Post> addPost(@RequestBody AddPostRequestDTO requestDTO, @RequestHeader("Authorization") HttpHeaders headers, BindingResult bindingResult) {
+//    @CrossOrigin(origins = "*")
+    @PostMapping(value = "/posts")
+    public ResponseEntity<Post> addPost(@RequestBody AddPostRequestDTO requestDTO, @RequestHeader("Authorization") String userId, BindingResult bindingResult) {
+//    public ResponseEntity<Post> addPost(@RequestBody AddPostRequestDTO requestDTO) {
         //TODO: process POST request
         System.out.println("=================================");
         System.out.println(requestDTO.getTitle());
-        
-        Post postPS = postService.addPost(requestDTO);
+        Optional<User> optionalUser = userService.getUser(Long.parseLong(userId));
+        Post postPS = postService.addPost(requestDTO, optionalUser);
+//        Post postPS = postService.addPost(requestDTO);
+        System.out.println("=================================");
         return ResponseEntity.ok(postPS);
     }
-
-
-    
 }

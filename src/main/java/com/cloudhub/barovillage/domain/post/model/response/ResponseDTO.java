@@ -75,6 +75,7 @@ public class ResponseDTO{
             this.imageUrl = post.getImageUrl();
             this.createAt = post.getCreateAt();
             this.status = post.getStatus();
+
             User user = post.getUser();
             this.userId = user.getId();
             this.username = user.getNickname();
